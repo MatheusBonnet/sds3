@@ -1,5 +1,7 @@
 package com.matheusbonnet.dashMath.services;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -7,6 +9,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.matheusbonnet.dashMath.dto.SaleDTO;
+import com.matheusbonnet.dashMath.dto.SaleSucessDTO;
+import com.matheusbonnet.dashMath.dto.SaleSumDTO;
 import com.matheusbonnet.dashMath.entities.Sale;
 import com.matheusbonnet.dashMath.repository.SaleRepository;
 import com.matheusbonnet.dashMath.repository.SellerRepository;
@@ -26,4 +30,15 @@ public class SaleService {
 ;		Page<Sale> sale = repo.findAll(pageable);
 		return sale.map(x -> new SaleDTO(x));
 	}	
+	
+	@Transactional(readOnly = true)
+	public List<SaleSumDTO> amountGroupedBySeller(){
+		return repo.amountGroupedBySeller();
+	}
+	
+	@Transactional(readOnly = true)
+	public List<SaleSucessDTO> sucessGroupedBySeller(){
+		return repo.sucessGroupedBySeller();
+	}
 }
+
